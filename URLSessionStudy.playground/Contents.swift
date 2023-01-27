@@ -1,4 +1,5 @@
 import UIKit
+import Foundation
 
 var greeting = "Hello, playground"
 
@@ -37,7 +38,7 @@ func searchGithubUser(query: String) {
     let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
          //ここにデータ受信後の処理を書く
     }
-    task.resume()
+    task.resume() //URLSessionDataTaskはインスタンス化しただけだと実行されないので、resume()メソッドを使って実行します。
 }
 
 //解説
@@ -46,6 +47,36 @@ func searchGithubUser(query: String) {
 //URLSession.sharedを使うと、設定情報なしで、セッションが使えます。（インスタンス化なしで使える）
 
 
+//dataTask(with: request)とは
 
+dataTask(with: request) { (data, response, error) in
+         //ここにデータ受信後の処理を書く
+    }
+//↓
+//定義
+func dataTask(with request: URLRequest,
+completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTask
+
+//１つめの引数にHTTPリクエストオブジェクトを、
+//２つめの引数に「completionHandler」というクロージャをとって、
+//戻り値にURLSessionDataTaskオブジェクトを返すメソッドです。
+
+//completionHandler(data, response, error)について
+//completionHandlerは簡単に言うと、通信が終了した後の完了処理をするためのクロージャです。
+
+//completionHandlerは３つの引数をとって、戻り値を返さないクロージャです。
+//URLSessionは、サーバ通信が終わると、このcompletionHandlerを実行します。
+
+//引数３つの役割を説明すると、
+//Data?: サーバから返されたデータが入る（オプショナル）。
+//URLResponse?: HTTPレスポンスが入る（オプショナル）。
+//Error?: エラーが発生していた場合、エラーコードが入る（オプショナル）。　ErrorはHTTPのエラーコードとは違うので、注意。
+
+
+
+//@escapingは「関数に引数として渡されたクロージャが、関数のスコープ外で保持される可能性があることを示す属性」
+
+//戻り値のURLSessionDataTaskというのは、URLSessionが作ったタスクです。
+//１セッションが複数の具体的なタスクを持って、あるデータをとって来ては何らかの処理を加えるというイメージ
 
 
