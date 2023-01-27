@@ -26,4 +26,26 @@ func searchGithubUser(query: String) {
 //User-Agent: curl/7.54.0
 //Accept: */*
 
+//2.HTTPリクエストを投げる、その結果を受け取る
+//リクエストを投げるにはURLSessionというクラスを使いましょう。
+
+
+func searchGithubUser(query: String) {
+
+    let url = URL(string: "https://api.github.com/search/users?q=" + query)!
+    let request = URLRequest(url: url)
+    let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+         //ここにデータ受信後の処理を書く
+    }
+    task.resume()
+}
+
+//解説
+//URLSession.sharedとは -
+//URLSessionのインスタンスを作る際に、設定情報を渡す必要があります。
+//URLSession.sharedを使うと、設定情報なしで、セッションが使えます。（インスタンス化なしで使える）
+
+
+
+
 
